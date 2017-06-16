@@ -1,0 +1,12 @@
+package: k8s-api-server
+import:
+- package: github.com/gorilla/mux
+  version: v1.4.0
+- package: k8s.io/apimachinery
+  subpackages:
+  - pkg/apis/meta/v1
+- package: k8s.io/client-go
+  version: v3.0.0-beta.0
+  subpackages:
+  - kubernetes
+  - tools/clientcmd
