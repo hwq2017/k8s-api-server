@@ -7,15 +7,20 @@ import (
 func (h *Handler) PodsDelete(rw http.ResponseWriter, req *http.Request) {
 	podspec := JsonUnmarshal(rw, req)
 
-	var name string = podspec["name"].(string)
-	var namespaces string = podspec["namespaces"].(string)
+	var msg string
 
-	result, err := "success", h.pods.Delete(name, namespaces)
-	if err != nil {
-		panic(err.Error())
+	podsname := podspec["name"].([]interface{})
+	namespaces := podspec["namespaces"].(string)
+	for _, name := range podsname {
+		err := h.pods.Delete(name.(string), namespaces)
+		if err != nil {
+			msg = err.Error()
+		} else {
+			msg = "Success"
+		}
 	}
+	Response(msg, rw)
 
-	Response(result, rw)
 }
 
 func (h *Handler) ServiceDelete(rw http.ResponseWriter, req *http.Request) {
