@@ -9,8 +9,9 @@ type Pods struct {
 	client *Clientset
 }
 
-func (p *Pods) List() (result *v1.PodList) {
-	result, err := p.client.clientset.CoreV1().Pods("").List(metav1.ListOptions{})
+func (p *Pods) List(namespaces string) (result *v1.PodList) {
+	// result, err := p.client.clientset.CoreV1().Pods("").List(metav1.ListOptions{})
+	result, err := p.client.clientset.CoreV1().Pods(namespaces).List(metav1.ListOptions{})
 	CheckErr(err)
 	return
 }

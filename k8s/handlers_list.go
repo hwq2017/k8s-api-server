@@ -7,7 +7,10 @@ import (
 )
 
 func (h *Handler) PodsList(rw http.ResponseWriter, req *http.Request) {
-	result := h.pods.List()
+	podspec := JsonUnmarshal(rw, req)
+	var namespaces string = podspec["namespaces"].(string)
+
+	result := h.pods.List(namespaces)
 	resp, _ := json.Marshal(result.Items)
 	fmt.Fprintf(rw, string(resp))
 }
